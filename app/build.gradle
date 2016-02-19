@@ -1,0 +1,43 @@
+apply plugin: 'android-sdk-manager'
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "hackathon.polata.getir"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Support libraries
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+
+    //Play services
+    compile 'com.google.android.gms:play-services-location:8.3.0'
+
+    //3rd party libraries
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'frankiesardo:icepick:3.1.0'
+    apt 'frankiesardo:icepick-processor:3.1.0'
+
+    compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.0'
+    apt 'com.hannesdorfmann.fragmentargs:processor:3.0.0'
+
+    testCompile 'junit:junit:4.12'
+}

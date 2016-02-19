@@ -1,0 +1,1 @@
+Getir Android application

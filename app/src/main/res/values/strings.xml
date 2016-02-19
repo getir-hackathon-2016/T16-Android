@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Getir</string>
+
+    <string name="navigation_drawer_open">Navigasyon barı aç</string>
+    <string name="navigation_drawer_close">Navigasyon barı kapat</string>
+
+    <string name="action_settings">Ayarlar</string>
+
+    <string name="login_user_name">Kullanıcı adı</string>
+
+</resources>

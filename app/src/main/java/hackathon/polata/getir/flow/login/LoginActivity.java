@@ -39,19 +39,21 @@ public class LoginActivity extends BaseActivity implements LoginController {
     public void onClickLogin(String username, String password) {
         final GetirService service = GetirServiceGenerator.createService(GetirService.class);
         showProgressDialog();
-        service.login(new User(username, password)).enqueue(new CustomCallback<AccessToken>() {
-            @Override
-            public void onResponse(AccessToken response) {
-                hideProgressDialog();
-                PrefUtil.putString(LoginActivity.this, KEY_TOKEN, response.getAccessToken());
-                startActivity(ProductsActivity.newIntent(LoginActivity.this, true));
-            }
-
-            @Override
-            public void onFailure(CustomError error) {
-                hideProgressDialog();
-                AppMsg.makeText(LoginActivity.this, error.getErrorMessage(), AppMsg.STYLE_INFO);
-            }
-        });
+        startActivity(ProductsActivity.newIntent(LoginActivity.this, true));
+        hideProgressDialog();
+//        service.login(new User(username, password)).enqueue(new CustomCallback<AccessToken>() {
+//            @Override
+//            public void onResponse(AccessToken response) {
+//                hideProgressDialog();
+//                PrefUtil.putString(LoginActivity.this, KEY_TOKEN, response.getAccessToken());
+//                startActivity(ProductsActivity.newIntent(LoginActivity.this, true));
+//            }
+//
+//            @Override
+//            public void onFailure(CustomError error) {
+//                hideProgressDialog();
+//                AppMsg.makeText(LoginActivity.this, error.getErrorMessage(), AppMsg.STYLE_INFO);
+//            }
+//        });
     }
 }

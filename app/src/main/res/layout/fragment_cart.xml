@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <hackathon.polata.getir.view.GetirTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cart"/>
+
+    <hackathon.polata.getir.view.EmptyRecyclerView
+        android:id="@+id/fragment_cart_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/fragment_cart_view_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+
+        <hackathon.polata.getir.view.GetirTextView
+            style="@style/TextView.Getir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/getir_spacing_large"
+            android:paddingTop="@dimen/getir_spacing_large"
+            android:text="@string/continue_cart"
+            android:textSize="@dimen/getir_text_large"/>
+
+        <hackathon.polata.getir.view.GetirTextView
+            android:id="@+id/fragment_cart_textview_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="@dimen/getir_spacing_large"
+            android:paddingLeft="@dimen/getir_spacing_large"
+            android:paddingRight="@dimen/getir_spacing_large"
+            android:paddingTop="@dimen/getir_spacing_large"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/getir_text_large"
+            tools:text="8.50"/>
+    </LinearLayout>
+
+    <hackathon.polata.getir.view.GetirTextView
+        android:id="@+id/fragment_cart_textview_empty_placeholder"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_cart_placeholder"
+        android:textSize="@dimen/getir_text_large"/>
+
+</LinearLayout>

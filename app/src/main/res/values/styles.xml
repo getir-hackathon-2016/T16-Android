@@ -7,6 +7,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

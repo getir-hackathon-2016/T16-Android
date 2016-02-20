@@ -14,6 +14,11 @@
     <string name="title_activity_maps">Harita</string>
 
     <string name="categories">Kategoriler</string>
+    <string name="cart">Sepetim</string>
+    <string name="empty_cart">Sepeti boşalt</string>
+    <string name="empty_cart_placeholder">Sepetinizde bir ürün bulunmuyor.</string>
+
+    <string name="continue_cart">Devam Et</string>
 
     <string name="marker_address">Teslimat adresi belirle</string>
 

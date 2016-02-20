@@ -8,6 +8,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -25,22 +27,35 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.Bind;
 import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseActivity;
 import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
+import hackathon.polata.getir.util.GridItemDecoration;
 import hackathon.polata.getir.util.PermissionUtils;
+import hackathon.polata.getir.view.GetirTextView;
 
 /**
  * Created by polata on 20/02/2016.
  */
 public class ProductsActivity extends BaseActivity implements
-        ProductController, OnMapReadyCallback,
+        OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, ProductCategoriesListAdapter.ItemSelectionListener, ProductListAdapter.ItemSelectionListener {
+
+    public enum ActiveScreen {
+        PRODUCT, PRODUCT_CATEGORY;
+    }
+
+    @Bind(R.id.activity_product_categories_recyclerview)
+    RecyclerView recyclerViewProduct;
+
+    @Bind(R.id.activity_product_textview_time)
+    GetirTextView textViewTime;
 
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static final int MY_LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -57,6 +72,10 @@ public class ProductsActivity extends BaseActivity implements
 
     private MockGenerator mockGenerator;
 
+    private ActiveScreen activeScreen;
+
+    private ProductCategory selectedCategory;
+
     public static Intent newIntent(Context context, boolean clearBackStack) {
         final Intent intent = new Intent(context, ProductsActivity.class);
 
@@ -72,6 +91,11 @@ public class ProductsActivity extends BaseActivity implements
     }
 
     @Override
+    protected int getBaseFrameLayoutId() {
+        return 0;
+    }
+
+    @Override
     protected BaseFragment getContainedFragment() {
         return null;
     }
@@ -84,10 +108,7 @@ public class ProductsActivity extends BaseActivity implements
         mapFragment.getMapAsync(this);
 
         mockGenerator = new MockGenerator();
-        final ProductCategoriesFragment fragment = new ProductCategoriesFragmentBuilder(
-                mockGenerator.getProductCategories()).build();
-        addFragment(fragment);
-
+        getProductCategories();
         getUserLocation();
     }
 
@@ -187,14 +208,46 @@ public class ProductsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onSelectProductCategory(ProductCategory selectedCategory) {
-        ProductsFragment fragment = new ProductsFragmentBuilder(mockGenerator.getProducts()).build();
-        replaceFragment(fragment, fragment.getTag(), true);
+    public void onSelectItem(ProductCategory selectedCategory) {
+        this.selectedCategory = selectedCategory;
+        recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
+                getResources().getInteger(R.integer.product_selection_list_column_item_size)));
+
+        recyclerViewProduct.setAdapter(new ProductListAdapter(mockGenerator.getProducts(), this));
+
+        recyclerViewProduct.addItemDecoration(new GridItemDecoration(
+                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
+                getResources().getInteger(R.integer.product_selection_list_column_item_size)));
+
+        activeScreen = ActiveScreen.PRODUCT;
     }
 
     @Override
-    public void onSelectProduct(Product product) {
+    public void onSelectItem(Product product) {
+    }
 
+    @Override
+    public void onBackPressed() {
+        if(activeScreen == ActiveScreen.PRODUCT) {
+            getProductCategories();
+            return;
+        }
+        super.onBackPressed();
+    }
+    private void getProductCategories() {
+        recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
+                getResources().getInteger(R.integer.product_category_list_column_item_size)));
+
+        recyclerViewProduct.setAdapter(new ProductCategoriesListAdapter(mockGenerator.getProductCategories()
+                , this));
+
+        recyclerViewProduct.addItemDecoration(new GridItemDecoration(
+                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
+                getResources().getInteger(R.integer.product_category_list_column_item_size)));
+
+        textViewTime.setText(10 + " " + getString(R.string.min));
+
+        activeScreen = ActiveScreen.PRODUCT_CATEGORY;
     }
 
     private void getUserLocation() {
@@ -232,5 +285,4 @@ public class ProductsActivity extends BaseActivity implements
         googleMap.addMarker(options).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
     }
-
 }

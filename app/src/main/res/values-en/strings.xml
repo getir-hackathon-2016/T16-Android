@@ -13,6 +13,11 @@
     <string name="error_password_empty">Please enter a valid password.</string>
 
     <string name="categories">Categories</string>
+    <string name="cart">Cart</string>
+    <string name="empty_cart">Empty Cart</string>
+    <string name="empty_cart_placeholder">You don\'t have an item in your cart.</string>
+
+    <string name="continue_cart">Continue</string>
 
     <string name="marker_address">Set as address</string>
 

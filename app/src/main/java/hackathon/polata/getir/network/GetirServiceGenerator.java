@@ -29,7 +29,10 @@ public final class GetirServiceGenerator {
         final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        final OkHttpClient httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
+        final OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HeaderInterceptor())
+                .addInterceptor(logging)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)

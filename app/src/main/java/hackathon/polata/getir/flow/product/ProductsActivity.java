@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.devspark.appmsg.AppMsg;
 import com.google.android.gms.common.ConnectionResult;
@@ -28,15 +29,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
+import butterknife.OnClick;
 import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseActivity;
 import hackathon.polata.getir.core.BaseFragment;
+import hackathon.polata.getir.flow.cart.CartController;
+import hackathon.polata.getir.flow.cart.CartFragment;
+import hackathon.polata.getir.flow.cart.CartFragmentBuilder;
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
 import hackathon.polata.getir.util.GridItemDecoration;
 import hackathon.polata.getir.util.PermissionUtils;
+import hackathon.polata.getir.util.ProductUtil;
 import hackathon.polata.getir.view.GetirTextView;
 
 /**
@@ -46,7 +54,10 @@ public class ProductsActivity extends BaseActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, ProductCategoriesListAdapter.ItemSelectionListener, ProductListAdapter.ItemSelectionListener {
+        LocationListener,
+        ProductCategoriesListAdapter.ItemSelectionListener,
+        ProductListAdapter.ItemSelectionListener,
+        CartController {
 
     public enum ActiveScreen {
         PRODUCT, PRODUCT_CATEGORY;
@@ -60,6 +71,12 @@ public class ProductsActivity extends BaseActivity implements
 
     @Bind(R.id.activity_product_textview_time)
     GetirTextView textViewTime;
+
+    @Bind(R.id.activity_products_container_cart_overlay)
+    View viewCartOverlay;
+
+    @Bind(R.id.activity_products_textview_cart_overlay_total)
+    GetirTextView textViewTotal;
 
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static final int MY_LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -79,6 +96,7 @@ public class ProductsActivity extends BaseActivity implements
     private ActiveScreen activeScreen;
 
     private ProductCategory selectedCategory;
+    private ArrayList<Product> selectedProducts;
 
     private GridItemDecoration productCategoriesItemDecoration;
     private GridItemDecoration productsItemDecoration;
@@ -99,7 +117,7 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     protected int getBaseFrameLayoutId() {
-        return 0;
+        return R.id.activity_base_frame;
     }
 
     @Override
@@ -130,8 +148,8 @@ public class ProductsActivity extends BaseActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_chart) {
+            onClickCartTotal();
             return true;
-            //ToDo show chart
         }
         return false;
     }
@@ -228,7 +246,7 @@ public class ProductsActivity extends BaseActivity implements
 
         recyclerViewProduct.setAdapter(new ProductListAdapter(mockGenerator.getProducts(), this));
 
-        if(productCategoriesItemDecoration != null) {
+        if (productCategoriesItemDecoration != null) {
             recyclerViewProduct.removeItemDecoration(productCategoriesItemDecoration);
         }
         recyclerViewProduct.addItemDecoration(productsItemDecoration);
@@ -238,10 +256,35 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     public void onSelectItem(Product product) {
+        if (selectedProducts == null) {
+            selectedProducts = new ArrayList<>();
+        }
+        selectedProducts.add(product);
+
+        viewCartOverlay.setVisibility(View.VISIBLE);
+        textViewTotal.setText(ProductUtil.getCartTotalAsString(selectedProducts) + " TL");
+    }
+
+    @OnClick(R.id.activity_products_container_cart_overlay)
+    public void onClickCartTotal() {
+        if (getRegisteredFragment(CartFragment.class) == null) {
+            CartFragment fragment = new CartFragmentBuilder(selectedProducts).build();
+            addFragment(fragment);
+        }
+    }
+
+    @Override
+    public void onContinueClick() {
+        //ToDo make order
     }
 
     @Override
     public void onBackPressed() {
+        if (getRegisteredFragment(CartFragment.class) != null) {
+            super.onBackPressed();
+            return;
+        }
+
         if (activeScreen == ActiveScreen.PRODUCT) {
             getProductCategories();
             return;
@@ -275,7 +318,7 @@ public class ProductsActivity extends BaseActivity implements
         recyclerViewProduct.setAdapter(new ProductCategoriesListAdapter(mockGenerator.getProductCategories()
                 , this));
 
-        if(productsItemDecoration != null) {
+        if (productsItemDecoration != null) {
             recyclerViewProduct.removeItemDecoration(productsItemDecoration);
         }
         recyclerViewProduct.addItemDecoration(productCategoriesItemDecoration);

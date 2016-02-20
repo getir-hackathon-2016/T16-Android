@@ -30,4 +30,7 @@
 
     <dimen name="circular_add_dimen">20dp</dimen>
     <dimen name="circular_add_border_width">2dp</dimen>
+
+    <dimen name="cart_item_radius">8dp</dimen>
+    <dimen name="cart_overlay_radius">16dp</dimen>
 </resources>

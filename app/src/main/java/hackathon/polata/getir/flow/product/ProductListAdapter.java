@@ -53,7 +53,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         holder.textViewName.setText(products.get(position).getName());
-        holder.textViewAmount.setText(products.get(position).getAmount().toString());
+        holder.textViewAmount.setText(products.get(position).getAmount().setScale(2).toString());
         holder.textViewAmount.setTag(products.get(position));
     }
 
@@ -83,6 +83,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.listener = listener;
+            itemView.setOnClickListener(this);
         }
 
         @Override

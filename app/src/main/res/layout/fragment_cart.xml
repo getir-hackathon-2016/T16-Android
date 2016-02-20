@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
 
     <hackathon.polata.getir.view.GetirTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/getir_spacing_small"
+        android:paddingLeft="@dimen/getir_spacing_standard"
+        android:paddingRight="@dimen/getir_spacing_standard"
+        android:paddingTop="@dimen/getir_spacing_standard"
         android:text="@string/cart"/>
 
     <hackathon.polata.getir.view.EmptyRecyclerView
         android:id="@+id/fragment_cart_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/getir_spacing_standard"
+        android:paddingRight="@dimen/getir_spacing_standard"/>
 
     <LinearLayout
         android:id="@+id/fragment_cart_view_continue"
@@ -50,11 +58,13 @@
 
     <hackathon.polata.getir.view.GetirTextView
         android:id="@+id/fragment_cart_textview_empty_placeholder"
-        android:visibility="gone"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/getir_spacing_standard"
         android:text="@string/empty_cart_placeholder"
-        android:textSize="@dimen/getir_text_large"/>
+        android:textSize="@dimen/getir_text_large"
+        android:visibility="gone"/>
 
 </LinearLayout>

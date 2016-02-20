@@ -8,6 +8,7 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.hannesdorfmann.fragmentargs.bundler.ParcelerArgsBundler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -15,6 +16,7 @@ import butterknife.OnClick;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.network.model.Product;
+import hackathon.polata.getir.util.ProductUtil;
 import hackathon.polata.getir.view.EmptyRecyclerView;
 import hackathon.polata.getir.view.GetirTextView;
 
@@ -33,6 +35,9 @@ public class CartFragment extends BaseFragment<CartController> {
     @Bind(R.id.fragment_cart_textview_empty_placeholder)
     GetirTextView textViewEmptyPlaceholder;
 
+    @Bind(R.id.fragment_cart_view_continue)
+    View viewContinue;
+
     @Bind(R.id.fragment_cart_recyclerview)
     EmptyRecyclerView emptyRecyclerView;
 
@@ -43,6 +48,14 @@ public class CartFragment extends BaseFragment<CartController> {
 
     @Override
     protected void initUserInterface(LayoutInflater inflater, View rootView) {
+
+        if (products == null || ProductUtil.calculateCartTotal(products).compareTo(BigDecimal.ZERO) == 0) {
+            products = new ArrayList<>();
+            viewContinue.setVisibility(View.GONE);
+        } else {
+            textViewAmount.setText(ProductUtil.getCartTotalAsString(products) + " TL");
+        }
+
         emptyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         emptyRecyclerView.setEmptyView(textViewEmptyPlaceholder);
         emptyRecyclerView.setAdapter(new CartListAdapter(products));

@@ -3,6 +3,8 @@ package hackathon.polata.getir;
 import android.content.Context;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,9 +46,10 @@ public class MockGenerator {
                 products.add(new Product(productCategories.get(j),
                         String.format(MOCK_FORMAT,
                                 context.getResources().getString(R.string.product),
-                                i + j),
-                        i,
-                        i * generateRandom(MAX_COUNT), new BigDecimal(MAX_COUNT * j)));
+                                MAX_COUNT),
+                        i + j,
+                        i * generateRandom(MAX_COUNT), new BigDecimal(MAX_COUNT * j * 0.9,
+                        new MathContext(2, RoundingMode.HALF_UP))));
             }
         }
     }

@@ -1,4 +1,4 @@
-package hackathon.polata.getir;
+package hackathon.polata.getir.flow.product;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import hackathon.polata.getir.R;
 import hackathon.polata.getir.network.model.Product;
 
 /**

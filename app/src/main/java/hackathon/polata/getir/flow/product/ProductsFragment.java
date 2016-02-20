@@ -1,8 +1,9 @@
-package hackathon.polata.getir;
+package hackathon.polata.getir.flow.product;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
+import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseFragment;
 
 /**

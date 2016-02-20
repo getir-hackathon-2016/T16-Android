@@ -12,4 +12,6 @@
     <dimen name="getir_spacing_medium">12dp</dimen>
     <dimen name="getir_spacing_small">8dp</dimen>
     <dimen name="getir_spacing_small_x">4dp</dimen>
+
+    <dimen name="product_category_list_column_item_spacing">6dp</dimen>
 </resources>

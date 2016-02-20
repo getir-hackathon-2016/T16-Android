@@ -1,4 +1,4 @@
-package hackathon.polata.getir;
+package hackathon.polata.getir.flow.login;
 
 import hackathon.polata.getir.core.BaseController;
 

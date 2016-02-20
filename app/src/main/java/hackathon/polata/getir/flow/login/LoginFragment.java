@@ -1,4 +1,4 @@
-package hackathon.polata.getir;
+package hackathon.polata.getir.flow.login;
 
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.devspark.appmsg.AppMsg;
 
 import butterknife.Bind;
+import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.util.KeyboardUtil;
 import hackathon.polata.getir.view.GetirEditText;

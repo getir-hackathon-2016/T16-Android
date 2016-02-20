@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray">
 
     <hackathon.polata.getir.view.GetirTextView
+        android:id="@+id/list_item_product_categories_textview_name"
         style="@style/TextView.Getir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Yeni Ürünler"/>
 
     <ImageView
+        android:id="@+id/list_item_product_categories_imageview_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"

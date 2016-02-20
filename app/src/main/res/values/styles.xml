@@ -12,7 +12,10 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="TextView.Getir" parent="android:Widget.TextView">
+        <item name="android:color">@color/colorPrimaryDark</item>
+    </style>
 
 </resources>

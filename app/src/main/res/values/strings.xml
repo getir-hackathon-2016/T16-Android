@@ -6,6 +6,10 @@
 
     <string name="action_settings">Ayarlar</string>
 
+    <string name="please_wait">Lütfen bekleyiniz</string>
     <string name="login_user_name">Kullanıcı adı</string>
+    <string name="login_password">Şifre</string>
+
+    <string name="error_password_empty">Lütfen geçerli bir şifre giriniz.</string>
 
 </resources>

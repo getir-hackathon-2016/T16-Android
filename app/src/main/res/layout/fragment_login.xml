@@ -5,9 +5,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <hackathon.polata.getir.view.GetirTextView
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <hackathon.polata.getir.view.GetirEditText
+            android:id="@+id/fragment_login_edittext_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_user_name"
+            android:imeOptions="actionNext"
+            android:maxLength="@integer/user_name_max_length"
+            android:singleLine="true"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_user_name"/>
+        android:layout_marginTop="@dimen/getir_spacing_large">
+
+        <hackathon.polata.getir.view.GetirEditText
+            android:id="@+id/fragment_login_edittext_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password"
+            android:inputType="numberPassword"/>
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

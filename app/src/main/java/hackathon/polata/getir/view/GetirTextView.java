@@ -20,4 +20,8 @@ public class GetirTextView extends TextView {
     public GetirTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
+    public String getTextAsString() {
+        return getText().toString();
+    }
 }

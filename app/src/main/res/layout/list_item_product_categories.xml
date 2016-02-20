@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <hackathon.polata.getir.view.GetirTextView
+        style="@style/TextView.Getir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Yeni Ürünler"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/common_full_open_on_phone"/>
+</LinearLayout>

@@ -75,7 +75,7 @@
                     android:id="@+id/activity_product_categories_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/getir_spacing_standard"/>
+                    android:padding="@dimen/getir_spacing_small"/>
             </LinearLayout>
 
         </com.sothree.slidinguppanel.SlidingUpPanelLayout>

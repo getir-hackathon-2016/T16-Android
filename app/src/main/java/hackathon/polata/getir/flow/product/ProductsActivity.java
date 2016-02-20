@@ -26,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import butterknife.Bind;
 import hackathon.polata.getir.MockGenerator;
@@ -51,6 +52,9 @@ public class ProductsActivity extends BaseActivity implements
         PRODUCT, PRODUCT_CATEGORY;
     }
 
+    @Bind(R.id.sliding_layout)
+    SlidingUpPanelLayout slidingUpPanelLayout;
+
     @Bind(R.id.activity_product_categories_recyclerview)
     RecyclerView recyclerViewProduct;
 
@@ -75,6 +79,9 @@ public class ProductsActivity extends BaseActivity implements
     private ActiveScreen activeScreen;
 
     private ProductCategory selectedCategory;
+
+    private GridItemDecoration productCategoriesItemDecoration;
+    private GridItemDecoration productsItemDecoration;
 
     public static Intent newIntent(Context context, boolean clearBackStack) {
         final Intent intent = new Intent(context, ProductsActivity.class);
@@ -107,7 +114,9 @@ public class ProductsActivity extends BaseActivity implements
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mockGenerator = new MockGenerator();
+        mockGenerator = new MockGenerator(this);
+
+        setDecorations();
         getProductCategories();
         getUserLocation();
     }
@@ -210,14 +219,19 @@ public class ProductsActivity extends BaseActivity implements
     @Override
     public void onSelectItem(ProductCategory selectedCategory) {
         this.selectedCategory = selectedCategory;
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+        recyclerViewProduct.setAdapter(null);
+        recyclerViewProduct.setLayoutManager(null);
         recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
                 getResources().getInteger(R.integer.product_selection_list_column_item_size)));
 
         recyclerViewProduct.setAdapter(new ProductListAdapter(mockGenerator.getProducts(), this));
 
-        recyclerViewProduct.addItemDecoration(new GridItemDecoration(
-                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
-                getResources().getInteger(R.integer.product_selection_list_column_item_size)));
+        if(productCategoriesItemDecoration != null) {
+            recyclerViewProduct.removeItemDecoration(productCategoriesItemDecoration);
+        }
+        recyclerViewProduct.addItemDecoration(productsItemDecoration);
 
         activeScreen = ActiveScreen.PRODUCT;
     }
@@ -228,22 +242,43 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if(activeScreen == ActiveScreen.PRODUCT) {
+        if (activeScreen == ActiveScreen.PRODUCT) {
             getProductCategories();
             return;
         }
+
+        if (activeScreen == ActiveScreen.PRODUCT_CATEGORY &&
+                slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            return;
+        }
+
         super.onBackPressed();
     }
+
+    private void setDecorations() {
+        productCategoriesItemDecoration = new GridItemDecoration(
+                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
+                getResources().getInteger(R.integer.product_category_list_column_item_size));
+
+        productsItemDecoration = new GridItemDecoration(
+                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
+                getResources().getInteger(R.integer.product_selection_list_column_item_size));
+    }
+
     private void getProductCategories() {
+        recyclerViewProduct.setAdapter(null);
+        recyclerViewProduct.setLayoutManager(null);
         recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
                 getResources().getInteger(R.integer.product_category_list_column_item_size)));
 
         recyclerViewProduct.setAdapter(new ProductCategoriesListAdapter(mockGenerator.getProductCategories()
                 , this));
 
-        recyclerViewProduct.addItemDecoration(new GridItemDecoration(
-                getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
-                getResources().getInteger(R.integer.product_category_list_column_item_size)));
+        if(productsItemDecoration != null) {
+            recyclerViewProduct.removeItemDecoration(productsItemDecoration);
+        }
+        recyclerViewProduct.addItemDecoration(productCategoriesItemDecoration);
 
         textViewTime.setText(10 + " " + getString(R.string.min));
 

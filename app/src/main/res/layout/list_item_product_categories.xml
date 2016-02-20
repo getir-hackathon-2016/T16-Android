@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray">
+    android:background="@drawable/selector_product_list_item">
 
     <hackathon.polata.getir.view.GetirTextView
         android:id="@+id/list_item_product_categories_textview_name"
@@ -15,9 +15,10 @@
         tools:text="Yeni Ürünler"/>
 
     <ImageView
+        android:layout_marginTop="@dimen/getir_spacing_small"
         android:id="@+id/list_item_product_categories_imageview_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/product_category_dimen"
+        android:layout_height="@dimen/product_category_dimen"
         android:layout_gravity="right"
-        android:src="@drawable/ic_cart"/>
+        android:src="@drawable/coke"/>
 </LinearLayout>

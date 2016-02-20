@@ -1,12 +1,15 @@
 package hackathon.polata.getir;
 
+import android.content.Context;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+import hackathon.polata.getir.network.model.AccessToken;
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
+import hackathon.polata.getir.network.model.User;
 
 /**
  * Created by polata on 20/02/2016.
@@ -19,22 +22,29 @@ public class MockGenerator {
     private static ArrayList<ProductCategory> productCategories = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
 
-    public MockGenerator() {
-        generateProductCategories();
-        generateProducts();
+    public AccessToken login(User user) {
+        return new AccessToken("4213423423dadassda");
     }
 
-    private void generateProductCategories() {
+    public MockGenerator(Context context) {
+        generateProductCategories(context);
+        generateProducts(context);
+    }
+
+    private void generateProductCategories(Context context) {
         for (int i = 0; i < MAX_COUNT; i++) {
-            productCategories.add(new ProductCategory(i, String.format(MOCK_FORMAT, "Kategori", i)));
+            productCategories.add(new ProductCategory(i, String.format(MOCK_FORMAT,
+                    context.getResources().getString(R.string.category), i)));
         }
     }
 
-    private void generateProducts() {
+    private void generateProducts(Context context) {
         for (int i = 0; i < MAX_COUNT; i++) {
             for (int j = 0; j < MAX_COUNT; j++) {
                 products.add(new Product(productCategories.get(j),
-                        String.format(MOCK_FORMAT, "Urun", i),
+                        String.format(MOCK_FORMAT,
+                                context.getResources().getString(R.string.product),
+                                i + j),
                         i,
                         i * generateRandom(MAX_COUNT), new BigDecimal(MAX_COUNT * j)));
             }

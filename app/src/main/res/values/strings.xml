@@ -13,6 +13,8 @@
     <string name="error_password_empty">Lütfen geçerli bir şifre giriniz.</string>
     <string name="title_activity_maps">Harita</string>
 
+    <string name="product">Ürün</string>
+    <string name="category">Kategori</string>
     <string name="categories">Kategoriler</string>
     <string name="cart">Sepetim</string>
     <string name="empty_cart">Sepeti boşalt</string>

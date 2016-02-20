@@ -52,6 +52,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
+        holder.textViewName.setText(products.get(position).getName());
         holder.textViewAmount.setText(products.get(position).getAmount().toString());
         holder.textViewAmount.setTag(products.get(position));
     }
@@ -67,6 +68,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.list_item_product_textview_amount)
         GetirTextView textViewAmount;
+
+        @Bind(R.id.list_item_product_textview_name)
+        GetirTextView textViewName;
 
         private ItemSelectionListener listener;
 

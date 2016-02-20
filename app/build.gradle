@@ -57,6 +57,7 @@ dependencies {
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.0'
 
     compile 'com.sothree.slidinguppanel:library:3.2.1'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 
     testCompile 'junit:junit:4.12'
 }

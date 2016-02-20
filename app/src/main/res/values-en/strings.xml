@@ -12,6 +12,8 @@
 
     <string name="error_password_empty">Please enter a valid password.</string>
 
+    <string name="product">Product</string>
+    <string name="category">Category</string>
     <string name="categories">Categories</string>
     <string name="cart">Cart</string>
     <string name="empty_cart">Empty Cart</string>

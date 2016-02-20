@@ -6,6 +6,7 @@ package hackathon.polata.getir.network.model;
 
 public enum ErrorType {
 
+    SUCCESS(0),
     GENERIC_ERROR(-1);
 
     private int type;
@@ -37,6 +38,6 @@ public enum ErrorType {
             }
         }
 
-        return null;
+        return GENERIC_ERROR;
     }
 }

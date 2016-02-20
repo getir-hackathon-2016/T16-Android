@@ -2,13 +2,26 @@ package hackathon.polata.getir.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by polata on 20/02/2016.
  */
-public class AccessToken {
+@Parcel
+public class AccessToken extends BaseResponse {
 
     @SerializedName("access_token")
-    private String accessToken;
+    String accessToken;
+
+    /**
+     * Private constructor disabled.
+     */
+    private AccessToken() {
+    }
+
+    public AccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public String getAccessToken() {
         return accessToken;

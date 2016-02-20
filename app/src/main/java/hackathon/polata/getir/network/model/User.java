@@ -17,7 +17,7 @@ public class User {
     String password;
 
     /**
-     * Default constructor disabled.
+     * Private constructor disabled.
      */
     private User() {
     }

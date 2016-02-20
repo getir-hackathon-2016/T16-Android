@@ -27,4 +27,12 @@ public class CustomError {
         this.errorMessage = errorMessage;
         this.errorType = errorType;
     }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public ErrorType getErrorType() {
+        return errorType;
+    }
 }

@@ -18,6 +18,7 @@
     <dimen name="getir_text_large">20dp</dimen>
 
     <dimen name="product_category_list_column_item_spacing">6dp</dimen>
+    <dimen name="product_selection_list_column_item_spacing">10dp</dimen>
 
     <dimen name="map_height">200dp</dimen>
 </resources>

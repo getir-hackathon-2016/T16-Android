@@ -1,5 +1,6 @@
 package hackathon.polata.getir;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,7 +36,7 @@ public class MockGenerator {
                 products.add(new Product(productCategories.get(j),
                         String.format(MOCK_FORMAT, "Urun", i),
                         i,
-                        i * generateRandom(MAX_COUNT)));
+                        i * generateRandom(MAX_COUNT), new BigDecimal(MAX_COUNT * j)));
             }
         }
     }

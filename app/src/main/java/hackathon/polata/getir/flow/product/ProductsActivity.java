@@ -8,6 +8,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.devspark.appmsg.AppMsg;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,6 +29,7 @@ import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseActivity;
 import hackathon.polata.getir.core.BaseFragment;
+import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
 import hackathon.polata.getir.util.PermissionUtils;
 
@@ -51,6 +54,8 @@ public class ProductsActivity extends BaseActivity implements
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+    private MockGenerator mockGenerator;
 
     public static Intent newIntent(Context context, boolean clearBackStack) {
         final Intent intent = new Intent(context, ProductsActivity.class);
@@ -78,25 +83,27 @@ public class ProductsActivity extends BaseActivity implements
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        MockGenerator generator = new MockGenerator();
+        mockGenerator = new MockGenerator();
         final ProductCategoriesFragment fragment = new ProductCategoriesFragmentBuilder(
-                generator.getProductCategories()).build();
+                mockGenerator.getProductCategories()).build();
         addFragment(fragment);
 
         getUserLocation();
     }
 
-    public void getUserLocation() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.item_chart) {
+            return true;
+            //ToDo show chart
+        }
+        return false;
     }
 
     @Override
@@ -181,7 +188,26 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     public void onSelectProductCategory(ProductCategory selectedCategory) {
-        //ToDo navigate to selection screen
+        ProductsFragment fragment = new ProductsFragmentBuilder(mockGenerator.getProducts()).build();
+        replaceFragment(fragment, fragment.getTag(), true);
+    }
+
+    @Override
+    public void onSelectProduct(Product product) {
+
+    }
+
+    private void getUserLocation() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)
+                .setFastestInterval(1 * 1000);
     }
 
     private void setUpMapIfNeeded() {
@@ -206,4 +232,5 @@ public class ProductsActivity extends BaseActivity implements
         googleMap.addMarker(options).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
     }
+
 }

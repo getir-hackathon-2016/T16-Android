@@ -2,6 +2,8 @@ package hackathon.polata.getir.network.model;
 
 import org.parceler.Parcel;
 
+import java.math.BigDecimal;
+
 /**
  * Created by polata on 20/02/2016.
  */
@@ -11,6 +13,7 @@ public class Product {
     int quantity;
     String name;
     ProductCategory category;
+    BigDecimal amount;
 
     private Product() {}
 
@@ -22,11 +25,12 @@ public class Product {
      * @param productId product id
      * @param quantity  quantity
      */
-    public Product(ProductCategory category, String name, int productId, int quantity) {
+    public Product(ProductCategory category, String name, int productId, int quantity, BigDecimal amount) {
         this.category = category;
         this.name = name;
         this.productId = productId;
         this.quantity = quantity;
+        this.amount = amount;
     }
 
     public ProductCategory getCategory() {
@@ -43,5 +47,9 @@ public class Product {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 }

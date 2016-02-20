@@ -11,5 +11,15 @@
     <string name="login_password">Şifre</string>
 
     <string name="error_password_empty">Lütfen geçerli bir şifre giriniz.</string>
+    <string name="title_activity_maps">Harita</string>
 
+    <string name="categories">Kategoriler</string>
+
+    <string name="marker_address">Teslimat adresi belirle</string>
+
+    <string name="min">dk.</string>
+
+    <string name="permission_rationale_location">Haritadaki yeriniz için lokasyon izinleri gereklidir.</string>
+    <string name="location_permission_denied">Lütfen tekrar deneyiniz ve lokasyonu açınız.</string>
+    <string name="permission_required_toast">Lokasyon izinleri gereklidir.</string>
 </resources>

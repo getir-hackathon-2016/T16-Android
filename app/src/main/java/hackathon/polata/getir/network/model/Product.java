@@ -1,13 +1,18 @@
 package hackathon.polata.getir.network.model;
 
+import org.parceler.Parcel;
+
 /**
  * Created by polata on 20/02/2016.
  */
+@Parcel
 public class Product {
     int productId;
     int quantity;
     String name;
     ProductCategory category;
+
+    private Product() {}
 
     /**
      * Constructor.

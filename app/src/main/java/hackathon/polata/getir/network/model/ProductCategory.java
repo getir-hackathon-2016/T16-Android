@@ -19,7 +19,7 @@ public class ProductCategory {
     /**
      * Default constructor disabled.
      */
-    ProductCategory() {
+    private ProductCategory() {
     }
 
     /**

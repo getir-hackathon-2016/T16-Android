@@ -1,0 +1,19 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=5E:38:D7:1D:1D:65:DB:B4:6E:C7:4B:73:BE:3A:E1:41:DA:D7:34:EB%3Bhackathon.polata.getir.flow.product
+
+    You can also add your credentials to an existing key, using this line:
+    5E:38:D7:1D:1D:65:DB:B4:6E:C7:4B:73:BE:3A:E1:41:DA:D7:34:EB;hackathon.polata.getir.flow.product
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCH5a4uw06D905Aah67dPXomMi9_kK6NAM</string>
+</resources>

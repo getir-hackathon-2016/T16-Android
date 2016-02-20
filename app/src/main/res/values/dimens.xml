@@ -12,6 +12,12 @@
     <dimen name="getir_spacing_medium">12dp</dimen>
     <dimen name="getir_spacing_small">8dp</dimen>
     <dimen name="getir_spacing_small_x">4dp</dimen>
+    <dimen name="getir_spacing_small_xx">2dp</dimen>
+
+    <dimen name="getir_text_medium">16dp</dimen>
+    <dimen name="getir_text_large">20dp</dimen>
 
     <dimen name="product_category_list_column_item_spacing">6dp</dimen>
+
+    <dimen name="map_height">200dp</dimen>
 </resources>

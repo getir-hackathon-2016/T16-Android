@@ -2,6 +2,7 @@ package hackathon.polata.getir.core;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hackathon.polata.getir.R;
+import hackathon.polata.getir.util.DialogUtil;
 import icepick.Icepick;
 
 /**
@@ -59,6 +61,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        if (!hasNavigationDrawer()) {
+            toggle.setDrawerIndicatorEnabled(false);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
+        if (!isNavigationDrawerEnabled()) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -84,7 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         super.onDestroy();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         final int id = item.getItemId();
@@ -139,6 +150,29 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         replaceFragment(getSupportFragmentManager(), fragment, tag, getBaseFrameLayoutId(), true);
     }
 
+    /**
+     * Show progress dialog.
+     */
+    protected void showProgressDialog() {
+        DialogUtil.showProgressDialog(this);
+    }
+
+    /**
+     * Show progress dialog with a custom message.
+     *
+     * @param resourceId message resource id
+     */
+    protected void showProgressDialog(@StringRes int resourceId) {
+        DialogUtil.showProgressDialog(this, resourceId);
+    }
+
+    /**
+     * Hide progress dialog.
+     */
+    protected void hideProgressDialog() {
+        DialogUtil.hideProgressDialog();
+    }
+
     private void addFragment(
             FragmentManager fragmentManager,
             BaseFragment fragment,
@@ -173,6 +207,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         }
 
         transaction.commit();
+    }
+
+    protected boolean isNavigationDrawerEnabled() {
+        return true;
+    }
+
+    protected boolean hasNavigationDrawer() {
+        return true;
     }
 
     protected abstract BaseFragment getContainedFragment();

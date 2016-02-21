@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 @Parcel
 public class ProductCategory {
 
-    @SerializedName("categoryId")
+    @SerializedName("id")
     int categoryId;
 
     @SerializedName("name")

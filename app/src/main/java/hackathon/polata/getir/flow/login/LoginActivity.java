@@ -16,10 +16,6 @@ import hackathon.polata.getir.network.model.ApiResponse;
 import hackathon.polata.getir.network.model.CustomError;
 import hackathon.polata.getir.network.model.User;
 import hackathon.polata.getir.util.PrefUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginActivity extends BaseActivity implements LoginController {
 
     @Override
@@ -40,9 +36,6 @@ public class LoginActivity extends BaseActivity implements LoginController {
     @Override
     public void onClickLogin(String username, String password) {
         showProgressDialog();
-        //MockGenerator generator = new MockGenerator(this);
-        //generator.login(new User(username, password));
-        //startActivity(ProductsActivity.newIntent(LoginActivity.this, true));
         GetirServiceProvider.getService().login(new User(username, password)).enqueue(new CustomCallback<
                 ApiResponse<AccessToken>>() {
             @Override

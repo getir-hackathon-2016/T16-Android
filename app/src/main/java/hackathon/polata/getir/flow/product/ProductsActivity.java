@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseActivity;
 import hackathon.polata.getir.core.BaseFragment;
@@ -103,12 +102,13 @@ public class ProductsActivity extends BaseActivity implements
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    private MockGenerator mockGenerator;
+    ActiveScreen activeScreen;
 
-    private ActiveScreen activeScreen;
+    ProductCategory selectedCategory;
 
-    private ProductCategory selectedCategory;
-    private ArrayList<Product> selectedProducts;
+    ArrayList<Product> selectedProducts;
+
+    ArrayList<Product> products;
 
     private GridItemDecoration productCategoriesItemDecoration;
     private GridItemDecoration productsItemDecoration;
@@ -161,10 +161,23 @@ public class ProductsActivity extends BaseActivity implements
                     }
                 });
 
-        mockGenerator = new MockGenerator(this);
+        GetirServiceProvider.getService().getProducts(isUserAuthenticated() ? getAccessToken() : "")
+                .enqueue(new CustomCallback<ApiResponse<ArrayList<Product>>>() {
+                    @Override
+                    public void onFailure(CustomError error) {
+                        hideProgressDialog();
+                        AppMsg.makeText(ProductsActivity.this, error.getErrorMessage(), AppMsg.STYLE_ALERT)
+                                .setLayoutGravity(Gravity.BOTTOM).show();
+                    }
+
+                    @Override
+                    public void onResponse(ApiResponse<ArrayList<Product>> response) {
+                        hideProgressDialog();
+                        setProductData(response.getData());
+                    }
+                });
 
         setDecorations();
-        getProductCategories();
         getUserLocation();
     }
 
@@ -273,7 +286,8 @@ public class ProductsActivity extends BaseActivity implements
         recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
                 getResources().getInteger(R.integer.product_selection_list_column_item_size)));
 
-        recyclerViewProduct.setAdapter(new ProductListAdapter(mockGenerator.getProducts(), this));
+        recyclerViewProduct.setAdapter(new ProductListAdapter(
+                ProductUtil.getProductByCategory(products, selectedCategory), this));
 
         if (productCategoriesItemDecoration != null) {
             recyclerViewProduct.removeItemDecoration(productCategoriesItemDecoration);
@@ -338,13 +352,27 @@ public class ProductsActivity extends BaseActivity implements
                 getResources().getInteger(R.integer.product_selection_list_column_item_size));
     }
 
+
+    private void setUserData(AuthenticatedUser user) {
+        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_email))
+                .setText(user.getEmail());
+        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_username))
+                .setText(user.getEmail().substring(0, user.getEmail().indexOf("@")));
+    }
+
+
+    private void setProductData(ArrayList<Product> products) {
+        this.products = products;
+        getProductCategories();
+    }
+
     private void getProductCategories() {
         recyclerViewProduct.setAdapter(null);
         recyclerViewProduct.setLayoutManager(null);
         recyclerViewProduct.setLayoutManager(new GridLayoutManager(this,
                 getResources().getInteger(R.integer.product_category_list_column_item_size)));
 
-        recyclerViewProduct.setAdapter(new ProductCategoriesListAdapter(mockGenerator.getProductCategories()
+        recyclerViewProduct.setAdapter(new ProductCategoriesListAdapter(ProductUtil.getProductCategories(products)
                 , this));
 
         if (productsItemDecoration != null) {
@@ -379,12 +407,6 @@ public class ProductsActivity extends BaseActivity implements
         }
     }
 
-    private void setUserData(AuthenticatedUser user) {
-        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_email))
-                .setText(user.getEmail());
-        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_username))
-                .setText(user.getEmail().substring(0, user.getEmail().indexOf("@")));
-    }
 
     private void handleNewLocation(Location location) {
         double currentLatitude = location.getLatitude();

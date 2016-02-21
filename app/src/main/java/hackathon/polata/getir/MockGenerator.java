@@ -2,16 +2,11 @@ package hackathon.polata.getir;
 
 import android.content.Context;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Random;
 
-import hackathon.polata.getir.network.model.AccessToken;
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
-import hackathon.polata.getir.network.model.User;
 
 /**
  * Created by polata on 20/02/2016.
@@ -23,10 +18,6 @@ public class MockGenerator {
 
     private static ArrayList<ProductCategory> productCategories = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
-
-//    public AccessToken login(User user) {
-//        return new AccessToken("4213423423dadassda");
-//    }
 
     public MockGenerator(Context context) {
         generateProductCategories(context);
@@ -47,9 +38,8 @@ public class MockGenerator {
                         String.format(MOCK_FORMAT,
                                 context.getResources().getString(R.string.product),
                                 MAX_COUNT),
-                        i + j,
-                        i * generateRandom(MAX_COUNT), new BigDecimal(MAX_COUNT * j * 0.9,
-                        new MathContext(2, RoundingMode.HALF_UP))));
+                        i + j + "",
+                        i * generateRandom(MAX_COUNT), (MAX_COUNT * j * 0.9f)));
             }
         }
     }

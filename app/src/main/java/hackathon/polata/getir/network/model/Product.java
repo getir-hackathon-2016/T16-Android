@@ -1,5 +1,7 @@
 package hackathon.polata.getir.network.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.parceler.Parcel;
 
 import java.math.BigDecimal;
@@ -7,15 +9,30 @@ import java.math.BigDecimal;
 /**
  * Created by polata on 20/02/2016.
  */
+
 @Parcel
 public class Product {
-    int productId;
-    int quantity;
-    String name;
-    ProductCategory category;
-    BigDecimal amount;
 
-    private Product() {}
+    @SerializedName("id")
+    String productId;
+
+    @SerializedName("stock")
+    int quantity;
+
+    @SerializedName("name")
+    String name;
+
+    @SerializedName("category")
+    ProductCategory category;
+
+    @SerializedName("price")
+    float amount;
+
+    @SerializedName("image")
+    String imageUrl;
+
+    private Product() {
+    }
 
     /**
      * Constructor.
@@ -25,12 +42,21 @@ public class Product {
      * @param productId product id
      * @param quantity  quantity
      */
-    public Product(ProductCategory category, String name, int productId, int quantity, BigDecimal amount) {
+    public Product(ProductCategory category, String name, String productId, int quantity, float amount) {
         this.category = category;
         this.name = name;
         this.productId = productId;
         this.quantity = quantity;
         this.amount = amount;
+    }
+
+    public Product(float amount, ProductCategory category, String imageUrl, String name, String productId, int quantity) {
+        this.amount = amount;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.name = name;
+        this.productId = productId;
+        this.quantity = quantity;
     }
 
     public ProductCategory getCategory() {
@@ -41,7 +67,7 @@ public class Product {
         return name;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
@@ -50,6 +76,10 @@ public class Product {
     }
 
     public BigDecimal getAmount() {
-        return amount;
+        return new BigDecimal(amount).setScale(2);
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

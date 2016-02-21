@@ -1,8 +1,11 @@
 package hackathon.polata.getir.network;
 
+import java.util.ArrayList;
+
 import hackathon.polata.getir.network.model.AccessToken;
 import hackathon.polata.getir.network.model.ApiResponse;
 import hackathon.polata.getir.network.model.AuthenticatedUser;
+import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,4 +24,7 @@ public interface GetirService {
 
     @GET("/init")
     Call<ApiResponse<AuthenticatedUser>> init(@Header("X-Access-Token") String accessToken);
+
+    @GET("/product-list")
+    Call<ApiResponse<ArrayList<Product>>> getProducts(@Header("X-Access-Token") String accessToken);
 }

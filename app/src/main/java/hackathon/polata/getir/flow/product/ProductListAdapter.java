@@ -4,6 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -53,8 +56,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         holder.textViewName.setText(products.get(position).getName());
-        holder.textViewAmount.setText(products.get(position).getAmount().setScale(2).toString());
+        holder.textViewAmount.setText(products.get(position).getAmount().toString());
         holder.textViewAmount.setTag(products.get(position));
+
+        Picasso.with(holder.itemView.getContext())
+                .load(products.get(position).getImageUrl())
+                .into(holder.imageView);
     }
 
     @Override
@@ -66,6 +73,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
      * Inner product view holder.
      */
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @Bind(R.id.list_item_product_imageview_image)
+        ImageView imageView;
+
         @Bind(R.id.list_item_product_textview_amount)
         GetirTextView textViewAmount;
 

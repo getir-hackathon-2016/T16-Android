@@ -20,6 +20,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hackathon.polata.getir.R;
+import hackathon.polata.getir.flow.settings.SettingsFragment;
 import hackathon.polata.getir.network.model.AccessToken;
 import hackathon.polata.getir.util.DialogUtil;
 import hackathon.polata.getir.util.PrefUtil;
@@ -104,7 +105,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         final int id = item.getItemId();
-
+        if (id == R.id.activity_main_drawer_language) {
+           replaceFragment(new SettingsFragment());
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

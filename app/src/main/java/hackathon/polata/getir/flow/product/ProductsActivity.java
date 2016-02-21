@@ -43,6 +43,7 @@ import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.flow.cart.CartController;
 import hackathon.polata.getir.flow.cart.CartFragment;
 import hackathon.polata.getir.flow.cart.CartFragmentBuilder;
+import hackathon.polata.getir.flow.settings.SettingsController;
 import hackathon.polata.getir.network.CustomCallback;
 import hackathon.polata.getir.network.GetirServiceProvider;
 import hackathon.polata.getir.network.model.ApiResponse;
@@ -65,7 +66,7 @@ public class ProductsActivity extends BaseActivity implements
         LocationListener,
         ProductCategoriesListAdapter.ItemSelectionListener,
         ProductListAdapter.ItemSelectionListener,
-        CartController {
+        CartController, SettingsController {
 
     /**
      * Enum for the visible screen on activity.
@@ -329,6 +330,11 @@ public class ProductsActivity extends BaseActivity implements
     @Override
     public void onContinueClick() {
         //ToDo make order
+    }
+
+    @Override
+    public void onLanguageChanged() {
+        recreate();
     }
 
     @Override

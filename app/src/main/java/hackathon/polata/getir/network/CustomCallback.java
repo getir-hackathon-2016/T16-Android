@@ -32,10 +32,18 @@ public abstract class CustomCallback<T> implements Callback<T> {
         ApiResponse res = (ApiResponse) response.body();
         if (response.code() == 200) {
             if (res.getError().getErrorType().ordinal() == ErrorType.SUCCESS.ordinal()) {
-                onResponse((T)res);
+                onResponse((T) res);
             }
         } else {
-            onFailure(new CustomError(res.getError().getErrorMessage(), res.getError().getErrorType()));
+
+            String errorMessage = "";
+            ErrorType errorType = ErrorType.GENERIC_ERROR;
+            if (res != null && res.getError() != null) {
+                errorMessage = res.getError().getErrorMessage();
+                errorType = res.getError().getErrorType();
+            }
+
+            onFailure(new CustomError(errorMessage, errorType));
         }
     }
 

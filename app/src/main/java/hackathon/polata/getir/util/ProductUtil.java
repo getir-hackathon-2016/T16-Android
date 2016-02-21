@@ -54,7 +54,7 @@ public final class ProductUtil {
         final HashMap<Integer, ProductCategory> hashMap = new HashMap<>();
 
         for (Product product : products) {
-            if (!hashMap.containsKey(product.getCategory().getCategoryId())) {
+            if (product.getCategory() != null && !hashMap.containsKey(product.getCategory().getCategoryId())) {
                 hashMap.put(product.getCategory().getCategoryId(), product.getCategory());
             }
         }
@@ -77,7 +77,7 @@ public final class ProductUtil {
     public static ArrayList<Product> getProductByCategory(ArrayList<Product> products, ProductCategory category) {
         ArrayList<Product> productList = new ArrayList<>();
         for (Product product : products) {
-            if (product.getCategory().getCategoryId() == category.getCategoryId()) {
+            if (product.getCategory() != null && product.getCategory().getCategoryId() == category.getCategoryId()) {
                 productList.add(product);
             }
         }

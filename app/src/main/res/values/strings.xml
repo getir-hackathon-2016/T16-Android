@@ -29,4 +29,8 @@
     <string name="permission_rationale_location">Haritadaki yeriniz için lokasyon izinleri gereklidir.</string>
     <string name="location_permission_denied">Lütfen tekrar deneyiniz ve lokasyonu açınız.</string>
     <string name="permission_required_toast">Lokasyon izinleri gereklidir.</string>
+
+    <string name="change_language">Dil Seçimi</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_english">İngilizce</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -105,7 +107,7 @@ public class TrackOrderActivity extends BaseActivity implements
 
     private void initializeMap() {
         mPolylineOptions = new PolylineOptions();
-        mPolylineOptions.color(Color.BLUE).width(10);
+        mPolylineOptions.color(ContextCompat.getColor(this, R.color.colorPrimaryDark)).width(7);
     }
 
     private void updatePolyline() {
@@ -114,7 +116,8 @@ public class TrackOrderActivity extends BaseActivity implements
     }
 
     private void updateMarker() {
-        googleMap.addMarker(new MarkerOptions().position(latLng));
+        googleMap.addMarker(new MarkerOptions().position(latLng).icon(
+                (BitmapDescriptorFactory.fromResource(R.drawable.ic_truck))));
     }
 
     private void updateCamera() {
@@ -167,7 +170,7 @@ public class TrackOrderActivity extends BaseActivity implements
         double currentLongitude = location.getLongitude();
 
         this.latLng = new LatLng(currentLatitude, currentLongitude);
-        updateMarker();
+        googleMap.addMarker(new MarkerOptions().position(latLng));
         updateCamera();
 
         generateMockLocationUpdate();

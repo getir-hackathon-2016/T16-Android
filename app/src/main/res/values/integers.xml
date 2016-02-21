@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="user_name_max_length">12</integer>
+    <integer name="user_name_max_length">40</integer>
 
     <integer name="product_category_list_column_item_size">3</integer>
 

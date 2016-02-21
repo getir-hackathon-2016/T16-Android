@@ -35,6 +35,8 @@ public class LoginFragment extends BaseFragment<LoginController> implements Text
     @Override
     protected void initUserInterface(LayoutInflater inflater, View rootView) {
         editTextPassword.setOnEditorActionListener(this);
+        editTextUsername.setText("alpercem70@gmail.com");
+        editTextPassword.setText("1");
     }
 
     @Override

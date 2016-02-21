@@ -8,22 +8,29 @@ import org.parceler.Parcel;
  * Created by polata on 20/02/2016.
  */
 @Parcel
-public class User {
+public class AuthenticatedUser {
+    @SerializedName("id")
+    String id;
 
     @SerializedName("email")
     String email;
 
-    @SerializedName("password")
-    String password;
-
     /**
      * Private constructor disabled.
      */
-    private User() {
+    private AuthenticatedUser() {
     }
 
-    public User(String email, String password) {
-        this.password = password;
+    public AuthenticatedUser(String id, String email) {
+        this.id = id;
         this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getId() {
+        return id;
     }
 }

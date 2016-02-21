@@ -19,6 +19,8 @@ public class HeaderInterceptor implements Interceptor {
 
         final Request newRequest = originalRequest.newBuilder()
                 .header("Accept-Language", token)
+//                .header("Accept", "application/json")
+                .header("X-Device-Id", "android")
                 .build();
 
         return chain.proceed(newRequest);

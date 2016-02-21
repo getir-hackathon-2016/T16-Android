@@ -8,24 +8,24 @@ import com.google.gson.annotations.SerializedName;
 public class CustomError {
 
     @SerializedName("code")
-    private ErrorType errorType;
+    private int errorType;
 
-    @SerializedName("error_message")
+    @SerializedName("text")
     private String errorMessage;
 
     public CustomError(String errorMessage) {
-        this.errorType = ErrorType.GENERIC_ERROR;
+        this.errorType = ErrorType.GENERIC_ERROR.ordinal();
         this.errorMessage = errorMessage;
     }
 
     public CustomError(ErrorType errorType) {
-        this.errorType = errorType;
+        this.errorType =  errorType.ordinal();
         errorMessage = errorType.toString();
     }
 
     public CustomError(String errorMessage, ErrorType errorType) {
         this.errorMessage = errorMessage;
-        this.errorType = errorType;
+        this.errorType = errorType.ordinal();
     }
 
     public String getErrorMessage() {
@@ -33,6 +33,6 @@ public class CustomError {
     }
 
     public ErrorType getErrorType() {
-        return errorType;
+        return ErrorType.fromType(errorType);
     }
 }

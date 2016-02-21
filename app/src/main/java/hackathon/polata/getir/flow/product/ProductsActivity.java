@@ -8,11 +8,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.devspark.appmsg.AppMsg;
 import com.google.android.gms.common.ConnectionResult;
@@ -32,6 +35,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
@@ -40,6 +44,11 @@ import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.flow.cart.CartController;
 import hackathon.polata.getir.flow.cart.CartFragment;
 import hackathon.polata.getir.flow.cart.CartFragmentBuilder;
+import hackathon.polata.getir.network.CustomCallback;
+import hackathon.polata.getir.network.GetirServiceProvider;
+import hackathon.polata.getir.network.model.ApiResponse;
+import hackathon.polata.getir.network.model.AuthenticatedUser;
+import hackathon.polata.getir.network.model.CustomError;
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
 import hackathon.polata.getir.util.GridItemDecoration;
@@ -62,6 +71,9 @@ public class ProductsActivity extends BaseActivity implements
     public enum ActiveScreen {
         PRODUCT, PRODUCT_CATEGORY;
     }
+
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
 
     @Bind(R.id.sliding_layout)
     SlidingUpPanelLayout slidingUpPanelLayout;
@@ -131,6 +143,23 @@ public class ProductsActivity extends BaseActivity implements
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        showProgressDialog();
+        GetirServiceProvider.getService().init(isUserAuthenticated() ? getAccessToken() : "")
+                .enqueue(new CustomCallback<ApiResponse<AuthenticatedUser>>() {
+                    @Override
+                    public void onFailure(CustomError error) {
+                        hideProgressDialog();
+                        AppMsg.makeText(ProductsActivity.this, error.getErrorMessage(), AppMsg.STYLE_ALERT)
+                                .setLayoutGravity(Gravity.BOTTOM).show();
+                    }
+
+                    @Override
+                    public void onResponse(ApiResponse<AuthenticatedUser> response) {
+                        hideProgressDialog();
+                        setUserData(response.getData());
+                    }
+                });
 
         mockGenerator = new MockGenerator(this);
 
@@ -348,6 +377,13 @@ public class ProductsActivity extends BaseActivity implements
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
             }
         }
+    }
+
+    private void setUserData(AuthenticatedUser user) {
+        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_email))
+                .setText(user.getEmail());
+        ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_username))
+                .setText(user.getEmail().substring(0, user.getEmail().indexOf("@")));
     }
 
     private void handleNewLocation(Location location) {

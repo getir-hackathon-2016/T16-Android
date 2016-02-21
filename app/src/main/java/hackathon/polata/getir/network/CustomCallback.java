@@ -1,6 +1,6 @@
 package hackathon.polata.getir.network;
 
-import hackathon.polata.getir.network.model.BaseResponse;
+import hackathon.polata.getir.network.model.ApiResponse;
 import hackathon.polata.getir.network.model.CustomError;
 import hackathon.polata.getir.network.model.ErrorType;
 import retrofit2.Call;
@@ -29,20 +29,13 @@ public abstract class CustomCallback<T> implements Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        ApiResponse res = (ApiResponse) response.body();
         if (response.code() == 200) {
-
-            if (response.body() instanceof BaseResponse) {
-                final BaseResponse meta = (BaseResponse) response.body();
-                if (meta.getErrorCode() == ErrorType.SUCCESS.ordinal()) {
-                    onResponse(response.body());
-                    return;
-                }
-
-                onFailure(new CustomError(meta.getMessage(), ErrorType.fromType(meta.getErrorCode())));
-
-            } else {
-                throw new UnsupportedOperationException("Model classes should implement BaseResponse");
+            if (res.getError().getErrorType().ordinal() == ErrorType.SUCCESS.ordinal()) {
+                onResponse((T)res);
             }
+        } else {
+            onFailure(new CustomError(res.getError().getErrorMessage(), res.getError().getErrorType()));
         }
     }
 

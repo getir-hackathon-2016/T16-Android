@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import java.util.HashMap;
@@ -19,7 +20,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import hackathon.polata.getir.R;
+import hackathon.polata.getir.network.model.AccessToken;
 import hackathon.polata.getir.util.DialogUtil;
+import hackathon.polata.getir.util.PrefUtil;
 import icepick.Icepick;
 
 /**
@@ -27,6 +30,8 @@ import icepick.Icepick;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseController,
         NavigationView.OnNavigationItemSelectedListener {
+
+    protected final String KEY_TOKEN = "keyToken";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -207,6 +212,15 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         }
 
         transaction.commit();
+    }
+
+    public String getAccessToken() {
+        return PrefUtil.getString(this, KEY_TOKEN, "");
+    }
+
+    public boolean isUserAuthenticated() {
+        final String accessToken = PrefUtil.getString(this, KEY_TOKEN, "");
+        return !TextUtils.equals(accessToken, "");
     }
 
     protected boolean isNavigationDrawerEnabled() {

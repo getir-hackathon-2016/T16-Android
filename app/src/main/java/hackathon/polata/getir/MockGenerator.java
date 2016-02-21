@@ -24,9 +24,9 @@ public class MockGenerator {
     private static ArrayList<ProductCategory> productCategories = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
 
-    public AccessToken login(User user) {
-        return new AccessToken("4213423423dadassda");
-    }
+//    public AccessToken login(User user) {
+//        return new AccessToken("4213423423dadassda");
+//    }
 
     public MockGenerator(Context context) {
         generateProductCategories(context);

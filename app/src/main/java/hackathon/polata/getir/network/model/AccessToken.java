@@ -8,7 +8,7 @@ import org.parceler.Parcel;
  * Created by polata on 20/02/2016.
  */
 @Parcel
-public class AccessToken extends BaseResponse {
+public class AccessToken {
 
     @SerializedName("access_token")
     String accessToken;

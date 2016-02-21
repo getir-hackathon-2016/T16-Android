@@ -5,7 +5,7 @@ package hackathon.polata.getir.network;
  */
 public final class GetirServiceProvider {
 
-    public static GetirService getirService;
+    private static GetirService getirService;
 
     /**
      * Constructor.
@@ -18,7 +18,7 @@ public final class GetirServiceProvider {
      *
      * @return instance
      */
-    public GetirService getService() {
+    public static GetirService getService() {
         if (getirService == null) {
             getirService = GetirServiceGenerator.createService(GetirService.class);
         }

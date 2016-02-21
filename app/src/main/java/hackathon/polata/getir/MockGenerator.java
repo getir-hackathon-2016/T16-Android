@@ -19,6 +19,10 @@ public class MockGenerator {
     private static ArrayList<ProductCategory> productCategories = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
 
+    private static String promotion;
+
+    private static String address;
+
     /**
      * Constructor.
      *
@@ -27,6 +31,15 @@ public class MockGenerator {
     public MockGenerator(Context context) {
         generateProductCategories(context);
         generateProducts(context);
+        generatePromotion();
+    }
+
+    private void generatePromotion() {
+        promotion = "'Biskrem Bi Biskrem Versem' siparişine ikincisi hediye!";
+    }
+
+    private void generateAddress() {
+        address = "Adres 4: Levent Mahallesi, Ebulula Mardin Caddesi, No:23";
     }
 
     /**
@@ -76,5 +89,13 @@ public class MockGenerator {
 
     public ArrayList<Product> getProducts() {
         return products;
+    }
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

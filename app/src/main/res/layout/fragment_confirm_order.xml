@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
+
+    <hackathon.polata.getir.view.GetirTextView
+        style="@style/TextView.Getir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/getir_spacing_small"
+        android:layout_marginTop="@dimen/getir_spacing_small"
+        android:text="@string/delivery_address"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/getir_spacing_small"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/getir_spacing_small">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_address"/>
+
+        <hackathon.polata.getir.view.GetirTextView
+            android:id="@+id/fragment_confirm_order_textview_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/getir_spacing_small"
+            tools:text="'Biskrem Bi Biskrem Versem' siparişine ikincisi hediye!"/>
+    </LinearLayout>
+
+    <hackathon.polata.getir.view.GetirTextView
+        style="@style/TextView.Getir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/getir_spacing_small"
+        android:layout_marginTop="@dimen/getir_spacing_medium"
+        android:text="@string/promotion"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/getir_spacing_small"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/getir_spacing_small">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_promotion"/>
+
+        <hackathon.polata.getir.view.GetirTextView
+            android:id="@+id/fragment_confirm_order_textview_promotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="Adres 4: Levent Mahalles, Ebulula Mardin Caddesi, No:23"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/getir_spacing_standard"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/getir_spacing_small"
+        android:paddingRight="@dimen/getir_spacing_small"
+        android:paddingTop="@dimen/getir_spacing_large">
+
+        <hackathon.polata.getir.view.GetirTextView
+            style="@style/TextView.Getir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/getir_spacing_small"
+            android:layout_marginRight="@dimen/getir_spacing_small"
+            android:textSize="@dimen/getir_text_medium"
+            tools:text="Ödenecek Tutar"/>
+
+        <hackathon.polata.getir.view.GetirTextView
+            android:id="@+id/fragment_confirm_order_textview_amount"
+            style="@style/TextView.Getir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/getir_text_large"
+            tools:text="123 456 789 TL"/>
+    </LinearLayout>
+
+    <hackathon.polata.getir.view.GetirButton
+        android:id="@+id/fragment_confirm_order_button_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/getir_spacing_small"
+        android:layout_marginTop="@dimen/getir_spacing_medium"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:padding="@dimen/getir_spacing_medium"
+        android:text="@string/order"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

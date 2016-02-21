@@ -20,9 +20,14 @@ import android.widget.TextView;
 import com.devspark.appmsg.AppMsg;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,12 +42,16 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hackathon.polata.getir.MockGenerator;
 import hackathon.polata.getir.R;
 import hackathon.polata.getir.core.BaseActivity;
 import hackathon.polata.getir.core.BaseFragment;
 import hackathon.polata.getir.flow.cart.CartController;
 import hackathon.polata.getir.flow.cart.CartFragment;
 import hackathon.polata.getir.flow.cart.CartFragmentBuilder;
+import hackathon.polata.getir.flow.order.ConfirmOrderFragment;
+import hackathon.polata.getir.flow.order.ConfirmOrderFragmentBuilder;
+import hackathon.polata.getir.flow.order.OrderController;
 import hackathon.polata.getir.flow.settings.SettingsController;
 import hackathon.polata.getir.network.CustomCallback;
 import hackathon.polata.getir.network.GetirServiceProvider;
@@ -66,7 +75,9 @@ public class ProductsActivity extends BaseActivity implements
         LocationListener,
         ProductCategoriesListAdapter.ItemSelectionListener,
         ProductListAdapter.ItemSelectionListener,
-        CartController, SettingsController {
+        CartController,
+        SettingsController,
+        OrderController{
 
     /**
      * Enum for the visible screen on activity.
@@ -105,6 +116,10 @@ public class ProductsActivity extends BaseActivity implements
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+    private MockGenerator generator;
+
+    private String address;
 
     ActiveScreen activeScreen;
 
@@ -151,6 +166,8 @@ public class ProductsActivity extends BaseActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        generator = new MockGenerator(this);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -329,7 +346,11 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     public void onContinueClick() {
-        //ToDo make order
+        final String newAddress = address.equals("") ? generator.getAddress() : address;
+        ConfirmOrderFragment fragment = new ConfirmOrderFragmentBuilder(newAddress,
+                ProductUtil.calculateCartTotal(selectedProducts),
+                generator.getPromotion()).build();
+        replaceFragment(fragment);
     }
 
     @Override
@@ -356,6 +377,11 @@ public class ProductsActivity extends BaseActivity implements
         }
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void onMakeOrderClick() {
+        //ToDo make order
     }
 
     /**
@@ -423,6 +449,9 @@ public class ProductsActivity extends BaseActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
                 .build();
 
         mLocationRequest = LocationRequest.create()
@@ -458,7 +487,21 @@ public class ProductsActivity extends BaseActivity implements
                 .position(latLng)
                 .title(getString(R.string.marker_address))
                 .draggable(true);
+
         googleMap.addMarker(options).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+
+        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
+                .getCurrentPlace(mGoogleApiClient, null);
+        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
+            @Override
+            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    address = placeLikelihood.getPlace().getAddress().toString();
+                    break;
+                }
+                likelyPlaces.release();
+            }
+        });
     }
 }

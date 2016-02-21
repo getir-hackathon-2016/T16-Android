@@ -33,4 +33,8 @@
     <string name="change_language">Dil Seçimi</string>
     <string name="language_turkish">Türkçe</string>
     <string name="language_english">İngilizce</string>
+
+    <string name="delivery_address">TESLİMAT ADRESİ</string>
+    <string name="promotion">PROMOSYON</string>
+    <string name="order">Sipariş Ver</string>
 </resources>

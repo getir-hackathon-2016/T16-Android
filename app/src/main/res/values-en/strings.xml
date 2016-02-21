@@ -33,4 +33,7 @@
     <string name="language_turkish">Turkish</string>
     <string name="language_english">English</string>
 
+    <string name="delivery_address">DELIVERY ADDRESS</string>
+    <string name="promotion">PROMOTION</string>
+    <string name="order">MAKE ORDER</string>
 </resources>

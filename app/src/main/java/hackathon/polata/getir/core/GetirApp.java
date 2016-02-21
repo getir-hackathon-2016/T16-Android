@@ -14,6 +14,11 @@ public class GetirApp extends Application {
         instance = this;
     }
 
+    /**
+     * Return static Application instance.
+     *
+     * @return app instance
+     */
     public static GetirApp getInstance() {
         return instance;
     }

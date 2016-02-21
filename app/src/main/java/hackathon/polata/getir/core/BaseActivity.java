@@ -118,41 +118,123 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         }
     }
 
+    /**
+     * Return registered fragment attached to activity
+     *
+     * @param fragment fragment class
+     * @param <T>      generic class tye
+     * @return registeredfragment
+     */
     @SuppressWarnings("unchecked")
     protected <T extends BaseFragment> T getRegisteredFragment(Class<T> fragment) {
         return (T) attachedFragments.get(fragment);
     }
 
+    /**
+     * Return the layout of activity.
+     * Can be overridden by parent activities to define a custom layout.
+     *
+     * @return resource id
+     */
     protected int getContentResourceId() {
         return R.layout.activity_base;
     }
 
+    /**
+     * Return the base frame layout of activity, this is the frame that will hold the fragments.
+     * Can be overridden by parent activities to define a custom layout (and hence a new base frame).
+     *
+     * @return base frame layout id
+     */
     protected int getBaseFrameLayoutId() {
         return R.id.activity_base_frame;
     }
 
+    /**
+     * If false navigation drawer will be replaced by native back button.
+     * Can be overridden by parent activities.
+     *
+     * @return boolean
+     */
+    protected boolean isNavigationDrawerEnabled() {
+        return true;
+    }
+
+    /**
+     * If false navigation drawer is completely removed from the toolbar.
+     * Can be overriden by parent activities.
+     *
+     * @return boolean
+     */
+    protected boolean hasNavigationDrawer() {
+        return true;
+    }
+
+    /**
+     * Parent activities define their own contained fragment by overriding this method.
+     *
+     * @return fragment
+     */
+    protected abstract BaseFragment getContainedFragment();
+
+    /**
+     * Add new fragment to base frame layout (and to fragment stack).
+     *
+     * @param fragment fragment
+     */
     protected void addFragment(BaseFragment fragment) {
         addFragment(fragment, fragment.getFragmentTag());
     }
 
+    /**
+     * Add new fragment to base frame layout (and to fragment stack).
+     *
+     * @param fragment fragment
+     * @param tag      fragment tag
+     */
     protected void addFragment(BaseFragment fragment, String tag) {
         addFragment(fragment, tag, true);
     }
 
+    /**
+     * Add new fragment to base frame layout.
+     *
+     * @param fragment       fragment
+     * @param tag            fragment tag
+     * @param addToBackStack add to back stack condition
+     */
     protected void addFragment(BaseFragment fragment, String tag, boolean addToBackStack) {
         addFragment(getSupportFragmentManager(), fragment, tag, getBaseFrameLayoutId(), true);
     }
 
+    /**
+     * Replace fragment in the base frame layout (and add transaction to back stack).
+     *
+     * @param fragment fragment
+     */
     protected void replaceFragment(BaseFragment fragment) {
         replaceFragment(fragment, fragment.getFragmentTag());
     }
 
+    /**
+     * Replace fragment from the base frame layout (and add transaction to back stack).
+     *
+     * @param fragment fragment
+     * @param tag      tag
+     */
     protected void replaceFragment(BaseFragment fragment, String tag) {
         replaceFragment(fragment, tag, true);
     }
 
+    /**
+     * Replace fragment from the base frame layout.
+     *
+     * @param fragment       fragment
+     * @param tag            tag
+     * @param addToBackStack add to back stack condition
+     */
     protected void replaceFragment(BaseFragment fragment, String tag, boolean addToBackStack) {
-        replaceFragment(getSupportFragmentManager(), fragment, tag, getBaseFrameLayoutId(), true);
+        replaceFragment(getSupportFragmentManager(), fragment, tag, getBaseFrameLayoutId(), addToBackStack);
     }
 
     /**
@@ -178,6 +260,34 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         DialogUtil.hideProgressDialog();
     }
 
+    /**
+     * Return access token of session (if any).
+     *
+     * @return access token
+     */
+    public String getAccessToken() {
+        return PrefUtil.getString(this, KEY_TOKEN, "");
+    }
+
+    /**
+     * Return if user is authenticated.
+     *
+     * @return authentication condition
+     */
+    public boolean isUserAuthenticated() {
+        final String accessToken = PrefUtil.getString(this, KEY_TOKEN, "");
+        return !TextUtils.equals(accessToken, "");
+    }
+
+    /**
+     * Add fragment to frame layout.
+     *
+     * @param fragmentManager fragment manager
+     * @param fragment        fragment
+     * @param tag             tag
+     * @param frameLayoutId   frame layout id
+     * @param addToBackStack  add to back stack condition.
+     */
     private void addFragment(
             FragmentManager fragmentManager,
             BaseFragment fragment,
@@ -196,6 +306,15 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         transaction.commit();
     }
 
+    /**
+     * Replace fragment of the top of frame layout.
+     *
+     * @param fragmentManager fragment manager
+     * @param fragment        fragment
+     * @param tag             tag
+     * @param frameLayoutId   frame layout id
+     * @param addToBackStack  add to back stack condition
+     */
     private void replaceFragment(
             FragmentManager fragmentManager,
             BaseFragment fragment,
@@ -213,23 +332,4 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
 
         transaction.commit();
     }
-
-    public String getAccessToken() {
-        return PrefUtil.getString(this, KEY_TOKEN, "");
-    }
-
-    public boolean isUserAuthenticated() {
-        final String accessToken = PrefUtil.getString(this, KEY_TOKEN, "");
-        return !TextUtils.equals(accessToken, "");
-    }
-
-    protected boolean isNavigationDrawerEnabled() {
-        return true;
-    }
-
-    protected boolean hasNavigationDrawer() {
-        return true;
-    }
-
-    protected abstract BaseFragment getContainedFragment();
 }

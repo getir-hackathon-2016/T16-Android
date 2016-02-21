@@ -22,6 +22,12 @@ public class User {
     private User() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param email    email
+     * @param password password
+     */
     public User(String email, String password) {
         this.password = password;
         this.email = email;

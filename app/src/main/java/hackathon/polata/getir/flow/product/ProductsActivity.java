@@ -67,6 +67,9 @@ public class ProductsActivity extends BaseActivity implements
         ProductListAdapter.ItemSelectionListener,
         CartController {
 
+    /**
+     * Enum for the visible screen on activity.
+     */
     public enum ActiveScreen {
         PRODUCT, PRODUCT_CATEGORY;
     }
@@ -113,6 +116,13 @@ public class ProductsActivity extends BaseActivity implements
     private GridItemDecoration productCategoriesItemDecoration;
     private GridItemDecoration productsItemDecoration;
 
+    /**
+     * Create a new activity intent.
+     *
+     * @param context        context
+     * @param clearBackStack clear back stack flag
+     * @return intent
+     */
     public static Intent newIntent(Context context, boolean clearBackStack) {
         final Intent intent = new Intent(context, ProductsActivity.class);
 
@@ -342,6 +352,9 @@ public class ProductsActivity extends BaseActivity implements
         super.onBackPressed();
     }
 
+    /**
+     * Set item decorations of recyclerviews once.
+     */
     private void setDecorations() {
         productCategoriesItemDecoration = new GridItemDecoration(
                 getResources().getDimensionPixelSize(R.dimen.product_category_list_column_item_spacing),
@@ -352,7 +365,11 @@ public class ProductsActivity extends BaseActivity implements
                 getResources().getInteger(R.integer.product_selection_list_column_item_size));
     }
 
-
+    /**
+     * Bind authenticated user data to views.
+     *
+     * @param user authenticated user
+     */
     private void setUserData(AuthenticatedUser user) {
         ((TextView) ButterKnife.findById(navigationView, R.id.nav_header_textview_email))
                 .setText(user.getEmail());
@@ -360,12 +377,19 @@ public class ProductsActivity extends BaseActivity implements
                 .setText(user.getEmail().substring(0, user.getEmail().indexOf("@")));
     }
 
-
+    /**
+     * Bind product list.
+     *
+     * @param products product list
+     */
     private void setProductData(ArrayList<Product> products) {
         this.products = products;
         getProductCategories();
     }
 
+    /**
+     * Create product categories list and its adapter.
+     */
     private void getProductCategories() {
         recyclerViewProduct.setAdapter(null);
         recyclerViewProduct.setLayoutManager(null);
@@ -385,6 +409,9 @@ public class ProductsActivity extends BaseActivity implements
         activeScreen = ActiveScreen.PRODUCT_CATEGORY;
     }
 
+    /**
+     * Get user location.
+     */
     private void getUserLocation() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -398,6 +425,9 @@ public class ProductsActivity extends BaseActivity implements
                 .setFastestInterval(1 * 1000);
     }
 
+    /**
+     * A fallback map initializer.
+     */
     private void setUpMapIfNeeded() {
         if (googleMap == null) {
             googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -407,7 +437,11 @@ public class ProductsActivity extends BaseActivity implements
         }
     }
 
-
+    /**
+     * Handle new location when location changes.
+     *
+     * @param location location
+     */
     private void handleNewLocation(Location location) {
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();

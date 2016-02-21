@@ -19,11 +19,21 @@ public class MockGenerator {
     private static ArrayList<ProductCategory> productCategories = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param context context
+     */
     public MockGenerator(Context context) {
         generateProductCategories(context);
         generateProducts(context);
     }
 
+    /**
+     * Generate mock product categories.
+     *
+     * @param context context
+     */
     private void generateProductCategories(Context context) {
         for (int i = 0; i < MAX_COUNT; i++) {
             productCategories.add(new ProductCategory(i, String.format(MOCK_FORMAT,
@@ -31,6 +41,11 @@ public class MockGenerator {
         }
     }
 
+    /**
+     * Generate mock products.
+     *
+     * @param context context
+     */
     private void generateProducts(Context context) {
         for (int i = 0; i < MAX_COUNT; i++) {
             for (int j = 0; j < MAX_COUNT; j++) {
@@ -44,6 +59,12 @@ public class MockGenerator {
         }
     }
 
+    /**
+     * Generate a random value.
+     *
+     * @param threshold max threshold
+     * @return value
+     */
     private int generateRandom(int threshold) {
         final Random random = new Random();
         return random.nextInt(threshold);

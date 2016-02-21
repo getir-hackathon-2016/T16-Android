@@ -19,6 +19,11 @@ public class AccessToken {
     private AccessToken() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param accessToken access token
+     */
     public AccessToken(String accessToken) {
         this.accessToken = accessToken;
     }

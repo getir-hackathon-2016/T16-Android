@@ -14,6 +14,12 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     private boolean mNeedLeftSpacing = false;
 
+    /**
+     * Constructor.
+     *
+     * @param gridSpacingPx grid spacing
+     * @param gridSize      grid size
+     */
     public GridItemDecoration(int gridSpacingPx, int gridSize) {
         mSizeGridSpacingPx = gridSpacingPx;
         mGridSize = gridSize;

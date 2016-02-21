@@ -21,6 +21,12 @@ public class AuthenticatedUser {
     private AuthenticatedUser() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param id    id
+     * @param email email
+     */
     public AuthenticatedUser(String id, String email) {
         this.id = id;
         this.email = email;

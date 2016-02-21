@@ -2,9 +2,12 @@ package hackathon.polata.getir.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by polata on 20/02/2016.
  */
+@Parcel
 public class CustomError {
 
     @SerializedName("code")
@@ -13,16 +16,22 @@ public class CustomError {
     @SerializedName("text")
     private String errorMessage;
 
-    public CustomError(String errorMessage) {
-        this.errorType = ErrorType.GENERIC_ERROR.ordinal();
-        this.errorMessage = errorMessage;
-    }
-
+    /**
+     * Constructor.
+     *
+     * @param errorType error type
+     */
     public CustomError(ErrorType errorType) {
-        this.errorType =  errorType.ordinal();
+        this.errorType = errorType.ordinal();
         errorMessage = errorType.toString();
     }
 
+    /**
+     * Constructor.
+     *
+     * @param errorMessage error message
+     * @param errorType    error type
+     */
     public CustomError(String errorMessage, ErrorType errorType) {
         this.errorMessage = errorMessage;
         this.errorType = errorType.ordinal();

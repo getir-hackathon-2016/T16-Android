@@ -25,6 +25,6 @@ public interface GetirService {
     @GET("/init")
     Call<ApiResponse<AuthenticatedUser>> init(@Header("X-Access-Token") String accessToken);
 
-    @GET("/product-list")
+    @GET("/product-all")
     Call<ApiResponse<ArrayList<Product>>> getProducts(@Header("X-Access-Token") String accessToken);
 }

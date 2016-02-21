@@ -3,14 +3,10 @@ package hackathon.polata.getir.util;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import hackathon.polata.getir.network.model.Product;
 import hackathon.polata.getir.network.model.ProductCategory;
-import okhttp3.Interceptor;
 
 /**
  * Created by polata on 20/02/2016.
@@ -23,6 +19,12 @@ public final class ProductUtil {
     private ProductUtil() {
     }
 
+    /**
+     * Calculate total of cart of products.
+     *
+     * @param products products
+     * @return total value
+     */
     public static BigDecimal calculateCartTotal(List<Product> products) {
         BigDecimal total = BigDecimal.ZERO;
         for (Product product : products) {
@@ -32,10 +34,22 @@ public final class ProductUtil {
         return total;
     }
 
+    /**
+     * Return cart total as string.
+     *
+     * @param products products
+     * @return cart total
+     */
     public static String getCartTotalAsString(List<Product> products) {
         return calculateCartTotal(products).toString();
     }
 
+    /**
+     * Extract product categories list from products.
+     *
+     * @param products products
+     * @return list of product categories
+     */
     public static ArrayList<ProductCategory> getProductCategories(ArrayList<Product> products) {
         final HashMap<Integer, ProductCategory> hashMap = new HashMap<>();
 
@@ -53,6 +67,13 @@ public final class ProductUtil {
         return categories;
     }
 
+    /**
+     * Get products in a category.
+     *
+     * @param products original product list
+     * @param category category
+     * @return product list
+     */
     public static ArrayList<Product> getProductByCategory(ArrayList<Product> products, ProductCategory category) {
         ArrayList<Product> productList = new ArrayList<>();
         for (Product product : products) {

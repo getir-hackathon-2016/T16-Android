@@ -31,6 +31,9 @@ public class Product {
     @SerializedName("image")
     String imageUrl;
 
+    /**
+     * Default constructor disabled.
+     */
     private Product() {
     }
 

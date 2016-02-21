@@ -67,11 +67,27 @@ public abstract class BaseFragment<Controller extends BaseController> extends Fr
         Icepick.saveInstanceState(this, outState);
     }
 
+    /**
+     * Return fragment tag.
+     *
+     * @return fragment tag
+     */
     protected String getFragmentTag() {
         return this.getClass().getSimpleName();
     }
 
+    /**
+     * Parent fragments should override this to define their layout.
+     *
+     * @return resource layout id
+     */
     protected abstract int getResourceLayoutId();
 
+    /**
+     * Parent fragments should override this to initialize their layouts.
+     *
+     * @param inflater inflater
+     * @param rootView root view
+     */
     protected abstract void initUserInterface(LayoutInflater inflater, final View rootView);
 }

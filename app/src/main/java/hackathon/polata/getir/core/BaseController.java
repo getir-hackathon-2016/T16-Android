@@ -5,7 +5,17 @@ package hackathon.polata.getir.core;
  */
 public interface BaseController {
 
+    /**
+     * Attach controller to fragment.
+     *
+     * @param fragment fragment
+     */
     void attach(BaseFragment fragment);
 
+    /**
+     * Detach controller from fragment.
+     *
+     * @param fragment fragment
+     */
     void detach(BaseFragment fragment);
 }

@@ -19,4 +19,22 @@ This project uses:
 6) FragmentArgs for Activity->Fragment communication without reflection </br>
 7) AppMsg for toast messages </br>
 8) MaterialDialogs for progress dialogs and custom dialogs </br>
-9) SlidingUpPanel for sliding up layout
+9) SlidingUpPanel for sliding up layout </br>
+
+A Sample Flow </br>
+
+Application starts with a login screen (where fields come prefilled) and makes a login request to MW to
+get an access token(which will be saved to device for future use). </br>
+
+In the screen application makes init request (to get user information) and get request for products and
+product categories simultaneously. </br>
+
+User can select a product category and can see corresponding products in that category. A click on a product
+will add to a cart. </br>
+
+User can select cart, display items in the cart and can proceed for order. Making order goes to MW first for
+confirmation. </br>
+
+If confirmation is succesful, user is navigation to a screen where he/she can track the progress of order. (by
+tracking the location of the courier)
+

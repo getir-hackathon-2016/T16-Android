@@ -52,6 +52,7 @@ import hackathon.polata.getir.flow.cart.CartFragmentBuilder;
 import hackathon.polata.getir.flow.order.ConfirmOrderFragment;
 import hackathon.polata.getir.flow.order.ConfirmOrderFragmentBuilder;
 import hackathon.polata.getir.flow.order.OrderController;
+import hackathon.polata.getir.flow.order.TrackOrderActivity;
 import hackathon.polata.getir.flow.settings.SettingsController;
 import hackathon.polata.getir.network.CustomCallback;
 import hackathon.polata.getir.network.GetirServiceProvider;
@@ -77,7 +78,7 @@ public class ProductsActivity extends BaseActivity implements
         ProductListAdapter.ItemSelectionListener,
         CartController,
         SettingsController,
-        OrderController{
+        OrderController {
 
     /**
      * Enum for the visible screen on activity.
@@ -381,7 +382,7 @@ public class ProductsActivity extends BaseActivity implements
 
     @Override
     public void onMakeOrderClick() {
-        //ToDo make order
+        startActivity(TrackOrderActivity.newIntent(this, true));
     }
 
     /**
@@ -488,8 +489,9 @@ public class ProductsActivity extends BaseActivity implements
                 .title(getString(R.string.marker_address))
                 .draggable(true);
 
+        googleMap.clear();
         googleMap.addMarker(options).showInfoWindow();
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f));
 
         PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                 .getCurrentPlace(mGoogleApiClient, null);

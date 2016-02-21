@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Getir</string>
 
+    <string name="track_order">Sipariş Takibi</string>
+
     <string name="navigation_drawer_open">Navigasyon barı aç</string>
     <string name="navigation_drawer_close">Navigasyon barı kapat</string>
 
@@ -37,4 +39,9 @@
     <string name="delivery_address">TESLİMAT ADRESİ</string>
     <string name="promotion">PROMOSYON</string>
     <string name="order">Sipariş Ver</string>
+
+    <string name="order_on_the_way">Siparişiniz yolda...</string>
+    <string name="order_arrived">Siparişiniz ulaştı!</string>
+
+    <string name="ok">Tamam</string>
 </resources>

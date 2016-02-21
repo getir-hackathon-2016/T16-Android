@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Getir</string>
 
+    <string name="track_order">Track Order</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -36,4 +38,9 @@
     <string name="delivery_address">DELIVERY ADDRESS</string>
     <string name="promotion">PROMOTION</string>
     <string name="order">MAKE ORDER</string>
+
+    <string name="order_on_the_way">Your order is on its way...</string>
+    <string name="order_arrived">Your order arrived!</string>
+
+    <string name="ok">OK</string>
 </resources>
